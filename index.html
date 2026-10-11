@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DropRadar | Crypto Airdrop & Bounty Aggregator</title>
+<meta name="description" content="Live crypto airdrop, testnet, quest and bounty board. Free forever with referral links and live market prices.">
+<link rel="canonical" href="https://aoodiakdiro0001-ops.github.io/dropradar/">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0b0f1e">
+<meta property="og:type" content="website">
+<meta property="og:title" content="DropRadar | Airdrop & Bounty Aggregator">
+<meta property="og:description" content="Quests, testnets, learn-to-earn and bug bounties in one live board.">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Consolas,monospace}
+:root{--bg:#0b0f1e;--panel:#131a33;--line:#2a3560;--grn:#34d399;--gold:#fbbf24;--blu:#60a5fa;--pur:#c084fc;--txt:#e2e8f5;--mut:#8b98b8;--red:#f87171}
+body{background:var(--bg);color:var(--txt)}
+header{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.logo{font-size:22px;font-weight:900;color:var(--gold)}
+.logo small{display:block;font-size:11px;color:var(--mut);font-weight:400}
+.live{font-size:11px;font-weight:800;color:var(--grn);border:1px solid var(--grn);border-radius:12px;padding:3px 10px}
+header select{margin-left:auto;background:var(--panel);color:var(--txt);border:1px solid var(--line);border-radius:14px;padding:7px 10px;font-size:13px}
+.ticker{background:#080b16;border-bottom:1px solid var(--line);overflow:hidden;white-space:nowrap;padding:7px 0;font-size:12.5px;direction:ltr}
+.ticker span{margin:0 18px}
+.up{color:var(--grn)} .dn{color:var(--red)}
+.tabs{display:flex;gap:6px;padding:14px 16px 0;flex-wrap:wrap}
+.tabs button{background:var(--panel);color:var(--txt);border:1px solid var(--line);border-bottom:none;padding:10px 16px;border-radius:12px 12px 0 0;cursor:pointer;font-weight:800;font-size:13px}
+.tabs button.on{background:#1a2350;color:var(--gold)}
+main{max-width:1100px;margin:0 auto;padding:18px 15px 60px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:0 14px 14px 14px;padding:22px;display:none}
+.panel.on{display:block}
+.panel h2{color:var(--gold);margin-bottom:6px;font-size:19px}
+.panel p.sub{color:var(--mut);font-size:13px;margin-bottom:12px;line-height:1.7}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0;align-items:center}
+input[type=text],select,textarea{background:#0b0f1e;border:1px solid var(--line);color:var(--txt);border-radius:10px;padding:10px 13px;font-size:13.5px;outline:none}
+button.go{background:var(--gold);color:#231a03;border:none;padding:10px 22px;border-radius:10px;font-weight:900;cursor:pointer;font-size:14px}
+button.alt{background:transparent;color:var(--blu);border:1px solid var(--blu);padding:9px 16px;border-radius:10px;cursor:pointer;font-size:13px}
+.note{background:#1a2350;border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:12.5px;color:var(--mut);margin:10px 0;line-height:1.7}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-top:12px}
+.card{background:#0b0f1e;border:1px solid var(--line);border-radius:14px;padding:16px;font-size:13px;position:relative}
+.card.feat{border-color:var(--gold)}
+.card h3{font-size:16px;margin-bottom:4px}
+.card .meta{font-size:12px;color:var(--mut);margin:6px 0;line-height:1.8}
+.card p{color:var(--txt);line-height:1.6;margin:6px 0}
+.tag{display:inline-block;font-size:11px;font-weight:800;padding:3px 10px;border-radius:10px;background:#1a2350;color:var(--blu);margin:2px 4px 2px 0}
+.tag.gold{background:#3a2c10;color:var(--gold)}
+.tag.grn{background:#0e2a1d;color:var(--grn)}
+.card .row{margin-bottom:0}
+table.mk{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}
+table.mk th,table.mk td{border-bottom:1px solid var(--line);padding:9px 8px;text-align:left}
+table.mk th{color:var(--gold);font-size:12px}
+.donate{background:linear-gradient(135deg,#1a2350,#0e2a1d);border:1px solid var(--grn);border-radius:16px;padding:22px;text-align:center;margin-top:8px}
+.donate .addr{background:#0b0f1e;border-radius:10px;padding:10px;font-family:monospace;font-size:12px;word-break:break-all;direction:ltr;margin:8px auto;color:var(--grn);max-width:560px}
+.iban{background:#0b0f1e;border-radius:10px;padding:10px;font-size:12.5px;margin:8px auto;max-width:560px}
+.iban code{direction:ltr;display:block;font-family:monospace;margin-top:4px}
+.adslot{max-width:1100px;margin:12px auto 0;padding:0 15px;text-align:center}
+.adslot .ph{display:block;border:1px dashed var(--line);border-radius:10px;color:var(--mut);font-size:12px;padding:10px}
+footer{text-align:center;color:var(--mut);font-size:12.5px;padding:26px 16px;border-top:1px solid var(--line);line-height:2}
+footer a{color:var(--grn)}
+#toast{position:fixed;bottom:25px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:12px 25px;border-radius:25px;z-index:200;display:none;font-size:14px;max-width:92vw;text-align:center}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">🪂 DropRadar<small data-i="tag"></small></div>
+<span class="live">● LIVE</span>
+<select id="langSel" onchange="setLang(this.value)">
+<option value="en" selected>🇬🇧 English</option><option value="tr">🇹🇷 Türkçe</option><option value="ar">🇸🇦 العربية</option>
+</select>
+</header>
+<div class="ticker" id="ticker"><span>…</span></div>
+<div class="tabs" id="tabs"></div>
+<main>
+<section class="panel on" id="p-drops">
+<h2 data-i="dT"></h2><p class="sub" data-i="dS"></p>
+<div class="row"><select id="fType" onchange="renderBoard()"></select><select id="fNet" onchange="renderBoard()"></select><select id="fCost" onchange="renderBoard()"></select><input type="text" id="fQ" data-i-ph="searchPh" oninput="renderBoard()"></div>
+<div class="grid" id="board"></div>
+<div class="note" data-i="honestNote"></div>
+</section>
+<section class="panel" id="p-markets">
+<h2 data-i="mT"></h2><p class="sub" data-i="mS"></p>
+<div class="row"><button class="alt" onclick="loadMarkets(true)" data-i="btnRefresh"></button><span id="mSync" style="font-size:12px;color:var(--mut)"></span></div>
+<div style="overflow-x:auto"><table class="mk"><thead><tr><th>#</th><th data-i="cCoin"></th><th data-i="cPrice"></th><th>24h</th><th data-i="cMc"></th></tr></thead><tbody id="mkBody"></tbody></table></div>
+<h2 style="margin-top:16px" data-i="trendT"></h2>
+<div class="row" id="trendRow"></div>
+</section>
+<section class="panel" id="p-submit">
+<h2 data-i="sT"></h2><p class="sub" data-i="sS"></p>
+<div class="row"><input type="text" id="smName" data-i-ph="smNamePh" style="flex:1;min-width:180px"><input type="text" id="smUrl" placeholder="https://..." style="flex:1;min-width:200px;direction:ltr"></div>
+<div class="row"><select id="smType"></select><textarea id="smNote" rows="2" data-i-ph="smNotePh" style="flex:1;min-width:200px;min-height:44px"></textarea><button class="go" onclick="submitDrop()" data-i="btnSend"></button></div>
+<div id="smList"></div>
+</section>
+<section class="panel" id="p-donate">
+<h2 data-i="doT"></h2><p class="sub" data-i="doS"></p>
+<div class="donate">
+<div>₿ BTC</div><div class="addr" id="btcA"></div>
+<div>₮ USDT-TRC20</div><div class="addr" id="usdtA"></div>
+<div class="row" style="justify-content:center"><button class="alt" onclick="copyTxt(document.getElementById('btcA').textContent)" data-i="btnCopy"></button><img id="donQR" width="120" height="120" style="border-radius:10px;background:#fff;padding:5px" alt="QR"></div>
+<div class="iban">🏦 Baran Avisat — TRY<code>TR10 0001 0090 1008 4013 0050 01</code></div>
+<div class="iban">🏦 Baran Avisat — USD<code>TR80 0001 0090 1008 4013 0050 02</code></div>
+</div>
+</section>
+</main>
+<div class="adslot" id="adFoot"><span class="ph" data-i="adHere" style="display:block;border:1px dashed var(--line);border-radius:10px;color:var(--mut);font-size:12px;padding:10px"></span></div>
+<footer><span data-i="foot"></span><br>📧 <a href="mailto:baranavisat@gmail.com">baranavisat@gmail.com</a> · 📞 <a href="tel:+905313263722" dir="ltr">+90 531 326 37 22</a> · <a href="https://wa.me/905313263722" target="_blank" rel="noopener">WhatsApp</a><br><a href="README.md" target="_blank">README</a> · MIT</footer>
+<div id="toast"></div>
+<script>
+const CONFIG={ads:{coinzillaSrc:'',coinzillaZone:'',cointrafficSrc:'',cointrafficZone:'',client:'',slot:''},
+pay:{btc:'bc1q8dhtdrndxsl70e97t8grydfe6pjue37zrhzf6c',usdt:'TLWdTjqqogkXNEXGiPWsGdjFP6ioycxeWW'},
+refs:{}};
+const DROPS=[
+{id:'galxe',n:'Galxe',ty:'quests',net:'Multi',cost:'Free',u:'https://galxe.com',feat:1,d:{en:'The biggest quest platform — points, OATs and token rewards.',tr:'En büyük görev platformu — puan, OAT ve token ödülleri.',ar:'أكبر منصة مهام — نقاط ومكافآت.'}},
+{id:'zealy',n:'Zealy',ty:'quests',net:'Multi',cost:'Free',u:'https://zealy.io',d:{en:'Community sprints with leaderboard rewards.',tr:'Liderlik ödüllü topluluk sprintleri.',ar:'سباقات مجتمع بجوائز.'}},
+{id:'layer3',n:'Layer3',ty:'quests',net:'Multi',cost:'Free',u:'https://layer3.xyz',d:{en:'Curated on-chain quests with cube rewards.',tr:'Küp ödüllü seçkin zincir-içi görevler.',ar:'مهام مختارة بمكافآت.'}},
+{id:'taskon',n:'TaskOn',ty:'quests',net:'Multi',cost:'Free',u:'https://taskon.xyz',d:{en:'Quest & airdrop collaboration platform.',tr:'Görev ve airdrop işbirliği platformu.',ar:'منصة مهام وإيردروب.'}},
+{id:'questn',n:'QuestN',ty:'quests',net:'Multi',cost:'Free',u:'https://questn.com',d:{en:'One-stop quest and event rewards hub.',tr:'Tek durak görev ve etkinlik ödülleri.',ar:'مهام وفعاليات بمكافآت.'}},
+{id:'cblearn',n:'Coinbase Learn',ty:'learn',net:'Multi',cost:'Free',u:'https://www.coinbase.com/learn',feat:1,d:{en:'Learn crypto basics, earn small rewards.',tr:'Kripto öğren, küçük ödüller kazan.',ar:'تعلم واكسب مكافآت صغيرة.'}},
+{id:'bnlearn',n:'Binance Learn & Earn',ty:'learn',net:'BNB',cost:'Free',u:'https://academy.binance.com',d:{en:'Courses with token rewards on Binance.',tr:'Binance\u2019te token ödüllü kurslar.',ar:'دورات بمكافآت على بينانس.'}},
+{id:'cmcearn',n:'CMC Earn',ty:'learn',net:'Multi',cost:'Free',u:'https://coinmarketcap.com',d:{en:'Watch, learn and earn new tokens.',tr:'İzle, öğren, yeni token kazan.',ar:'شاهد وتعلم واكسب.'}},
+{id:'cgcandy',n:'CoinGecko Candies',ty:'rewards',net:'Multi',cost:'Free',u:'https://www.coingecko.com',d:{en:'Daily check-ins redeemable for rewards.',tr:'Günlük girişle biriken ödül puanları.',ar:'نقاط يومية قابلة للاستبدال.'}},
+{id:'immunefi',n:'Immunefi',ty:'bounty',net:'Multi',cost:'Free',u:'https://immunefi.com',feat:1,d:{en:'The largest bug-bounty platform — up to $ millions per payout.',tr:'En büyük bug-bounty platformu — milyon dolarlık ödemeler.',ar:'أكبر منصة مكافآت ثغرات — ملايين الدولارات.'}},
+{id:'cantina',n:'Cantina',ty:'bounty',net:'ETH',cost:'Free',u:'https://cantina.xyz',d:{en:'Competitive security reviews with real prize pools.',tr:'Ödüllü rekabetçi güvenlik incelemeleri.',ar:'مراجعات أمنية تنافسية بجوائز.'}},
+{id:'sherlock',n:'Sherlock',ty:'bounty',net:'ETH',cost:'Free',u:'https://sherlock.xyz',d:{en:'Audit contests judged by senior wardens.',tr:'Kıdemli denetçili audit yarışmaları.',ar:'مسابقات تدقيق بجوائز.'}},
+{id:'c4',n:'Code4rena',ty:'bounty',net:'ETH',cost:'Free',u:'https://code4rena.com',d:{en:'Open audit competitions, paid per finding.',tr:'Bulgu başına ödemeli açık yarışmalar.',ar:'مسابقات مفتوحة والدفع لكل ثغرة.'}},
+{id:'eth',n:'Ethereum Testnets',ty:'testnet',net:'ETH',cost:'Gas',u:'https://ethereum.org',d:{en:'Official docs, faucets and testnet guides.',tr:'Resmi dokümanlar, faucet ve testnet rehberleri.',ar:'الوثائق الرسمية والصنابير.'}},
+{id:'sol',n:'Solana Testnet',ty:'testnet',net:'SOL',cost:'Free',u:'https://solana.com',d:{en:'Devnet/testnet via official docs and CLI.',tr:'Resmi doküman ve CLI ile devnet/testnet.',ar:'شبكة تجريبية عبر الوثائق.'}},
+{id:'arb',n:'Arbitrum Sepolia',ty:'testnet',net:'ARB',cost:'Free',u:'https://arbitrum.io',d:{en:'L2 testnet for dApp trials and quests.',tr:'dApp denemeleri için L2 testnet.',ar:'شبكة اختبار لتجارب التطبيقات.'}},
+{id:'op',n:'Optimism Sepolia',ty:'testnet',net:'OP',cost:'Free',u:'https://optimism.io',d:{en:'Superchain testnet, quests-ready.',tr:'Görevlere hazır Superchain testnet.',ar:'شبكة اختبار جاهزة.'}},
+{id:'base',n:'Base Sepolia',ty:'testnet',net:'BASE',cost:'Free',u:'https://base.org',d:{en:'Coinbase L2 testnet for builders.',tr:'Geliştiriciler için Coinbase L2 testnet.',ar:'شبكة اختبار للمطورين.'}},
+{id:'stark',n:'Starknet Sepolia',ty:'testnet',net:'STRK',cost:'Free',u:'https://starknet.io',d:{en:'Validity-rollup testnet with faucet.',tr:'Faucet\u2019li validity-rollup testnet.',ar:'شبكة اختبار مع صنبور.'}},
+{id:'zk',n:'zkSync Era Testnet',ty:'testnet',net:'ZK',cost:'Free',u:'https://zksync.io',d:{en:'ZK-rollup testnet for early trials.',tr:'Erken denemeler için ZK testnet.',ar:'شبكة اختبار مبكرة.'}}];
+const T={
+en:{tag:'Airdrop, testnet & bounty radar',tabD:'🪂 Drops',tabM:'📈 Markets',tabS:'📥 Submit',tabDo:'💚 Donate',
+dT:'🪂 Airdrop & Bounty Board',dS:'Quests, testnets, learn-to-earn and audit competitions in one live board. Links are official pages — verify details there. Starred = biggest.',
+searchPh:'🔍 Search...',allT:'All types',allN:'All networks',allC:'Any cost',openB:'Open ↗',refB:'REF',featB:'★ TOP',
+mT:'📈 Live Market Prices',mS:'Top coins by market cap (CoinGecko, auto-refresh). Prices contextualize drops — not financial advice.',
+btnRefresh:'↻ Refresh',cCoin:'Coin',cPrice:'Price',cMc:'Mkt Cap',trendT:'🔥 Trending now',
+sT:'📥 Submit an Opportunity',sS:'Found a legit airdrop? Submit it — community entries appear below after your review (stored locally).',
+smNamePh:'Program name',smNotePh:'short note...',btnSend:'Submit',smOk:'Received ✅ (stored locally)',smNeed:'Name + valid https URL required ⚠️',smListT:'Community submissions',
+doT:'💚 Support DropRadar',doS:'Free forever. Donations fund tracking and new networks. Crypto + bank below.',
+btnCopy:'Copy',adHere:'Crypto ads here (CoinZilla / Cointraffic)',
+foot:'DropRadar — free aggregator. Verify everything on official pages. Not financial advice.',
+copied:'Copied ✅',synced:'Synced',nodata:'Feed unreachable — retry ⚠️',ty_quests:'Quests',ty_learn:'Learn-to-Earn',ty_rewards:'Rewards',ty_bounty:'Bug Bounty',ty_audits:'Audits',ty_testnet:'Testnet',cost_Free:'Free',cost_Gas:'Gas needed',honestNote:'Rows link to official pages — rewards and deadlines change fast, always verify there. Prices live via CoinGecko.'},
+tr:{tag:'Airdrop, testnet ve ödül radarı',tabD:'🪂 Fırsatlar',tabM:'📈 Piyasalar',tabS:'📥 Öner',tabDo:'💚 Destek',
+dT:'🪂 Airdrop & Ödül Panosu',dS:'Görevler, testnetler, öğren-kazan ve denetim yarışmaları tek panoda. Bağlantılar resmi sayfalardır.',
+searchPh:'🔍 Ara...',allT:'Tüm türler',allN:'Tüm ağlar',allC:'Tümü',openB:'Aç ↗',refB:'REF',featB:'★ TOP',
+mT:'📈 Canlı Piyasalar',mS:'Piyasa değerine göre en büyük coinler (CoinGecko, otomatik). Yatırım tavsiyesi değildir.',
+btnRefresh:'↻ Yenile',cCoin:'Coin',cPrice:'Fiyat',cMc:'Piyasa Değ.',trendT:'🔥 Trendler',
+sT:'📥 Fırsat Öner',sS:'Gerçek bir airdrop buldun mu? Öner — topluluk girdileri aşağıda görünür (yerelde saklanır).',
+smNamePh:'Program adı',smNotePh:'kısa not...',btnSend:'Gönder',smOk:'Alındı ✅ (yerelde)',smNeed:'Ad + geçerli https URL gerekli ⚠️',smListT:'Topluluk önerileri',
+doT:'💚 DropRadar\u2019ı Destekle',doS:'Sonsuza dek ücretsiz. Bağışlar takibi finanse eder. Kripto + banka aşağıda.',
+btnCopy:'Kopyala',adHere:'Kripto reklamları burada (CoinZilla / Cointraffic)',
+foot:'DropRadar — ücretsiz toplayıcı. Her şeyi resmi sayfada doğrulayın. Yatırım tavsiyesi değildir.',
+copied:'Kopyalandı ✅',synced:'Eşleşti',nodata:'Akışa ulaşılamadı — retry ⚠️',ty_quests:'Görevler',ty_learn:'Öğren-Kazan',ty_rewards:'Ödüller',ty_bounty:'Bug Bounty',ty_audits:'Denetim',ty_testnet:'Testnet',cost_Free:'Ücretsiz',cost_Gas:'Gas gerekli',honestNote:'Satırlar resmi sayfalara gider — ödüller ve tarihler hızla değişir, orada doğrulayın.'},
+ar:{tag:'رادار الإيردروب والمكافآت',tabD:'🪂 الفرص',tabM:'📈 الأسواق',tabS:'📥 اقترح',tabDo:'💚 ادعم',
+dT:'🪂 لوحة الإيردروب والمكافآت',dS:'المهام والشبكات التجريبية وتعلم-واربح ومسابقات التدقيق في لوحة واحدة. الروابط للصفحات الرسمية.',
+searchPh:'🔍 ابحث...',allT:'كل الأنواع',allN:'كل الشبكات',allC:'الكل',openB:'افتح ↗',refB:'REF',featB:'★ مميز',
+mT:'📈 أسعار حية',mS:'أكبر العملات بالقيمة السوقية (CoinGecko). ليست نصيحة استثمارية.',
+btnRefresh:'↻ حدّث',cCoin:'العملة',cPrice:'السعر',cMc:'القيمة',trendT:'🔥 الرائج الآن',
+sT:'📥 اقترح فرصة',sS:'وجدت إيردروب حقيقياً؟ اقترحه — يظهر أدناه (يُحفظ محلياً).',
+smNamePh:'اسم البرنامج',smNotePh:'ملاحظة قصيرة...',btnSend:'أرسل',smOk:'استلمنا ✅ (محلياً)',smNeed:'الاسم + رابط https صالح ⚠️',smListT:'اقتراحات المجتمع',
+doT:'💚 ادعم DropRadar',doS:'مجاني للأبد. التبرعات تمول التتبع. كريبتو + بنك أدناه.',
+btnCopy:'نسخ',adHere:'إعلانات الكريبتو هنا',
+foot:'DropRadar — مجمّع مجاني. تحقق من الصفحات الرسمية. ليست نصيحة استثمارية.',
+copied:'تم ✅',synced:'تمت المزامنة',nodata:'تعذر الوصول — أعد المحاولة ⚠️',ty_quests:'مهام',ty_learn:'تعلم-واربح',ty_rewards:'مكافآت',ty_bounty:'مكافآت الثغرات',ty_audits:'تدقيق',ty_testnet:'تجريبية',cost_Free:'مجاني',cost_Gas:'يحتاج Gas',honestNote:'الصفوف للصفحات الرسمية — المكافآت تتغير بسرعة فتحقق هناك.'}};
+let lang='en';
+const t=k=>(T[lang]&&T[lang][k])||T.en[k]||k;
+function setLang(v){lang=v;document.documentElement.lang=v;document.documentElement.dir=(v==='ar')?'rtl':'ltr';document.getElementById('langSel').value=v;
+document.querySelectorAll('[data-i]').forEach(e=>{e.textContent=t(e.dataset.i);});
+document.querySelectorAll('[data-i-ph]').forEach(e=>{e.placeholder=t(e.dataset.iPh);});
+buildTabs();buildFilters();renderBoard();renderDonate();}
+const TABS=[['drops','tabD'],['markets','tabM'],['submit','tabS'],['donate','tabDo']];
+function buildTabs(){document.getElementById('tabs').innerHTML=TABS.map(x=>`<button id="tab-${x[0]}" onclick="tab('${x[0]}')">${t(x[1])}</button>`).join('');document.getElementById('tab-drops').classList.add('on');}
+function tab(w){TABS.forEach(x=>{const b=document.getElementById('tab-'+x[0]);if(b)b.classList.toggle('on',w===x[0]);document.getElementById('p-'+x[0]).classList.toggle('on',w===x[0]);});}
+function toast(m){let d=document.getElementById('toast');d.textContent=m;d.style.display='block';clearTimeout(d._h);d._h=setTimeout(()=>d.style.display='none',2200);}
+function sGet(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v);}catch(e){return d;}}
+function sSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+function copyTxt(x){try{if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(x);}catch(e){}toast(t('copied'));}
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function refFor(r){return (CONFIG.refs&&CONFIG.refs[r.id])||r.u;}
+function isRef(r){return !!(CONFIG.refs&&CONFIG.refs[r.id]);}
+function desc(r){return (r.d[lang]||r.d.en);}
+function buildFilters(){
+const tys=[...new Set(DROPS.map(r=>r.ty))],nets=[...new Set(DROPS.map(r=>r.net))],costs=[...new Set(DROPS.map(r=>r.cost))];
+document.getElementById('fType').innerHTML='<option value="">'+t('allT')+'</option>'+tys.map(x=>`<option value="${x}">${t('ty_'+x)||x}</option>`).join('');
+document.getElementById('fNet').innerHTML='<option value="">'+t('allN')+'</option>'+nets.map(x=>`<option>${x}</option>`).join('');
+document.getElementById('fCost').innerHTML='<option value="">'+t('allC')+'</option>'+costs.map(x=>`<option value="${x}">${t('cost_'+x)||x}</option>`).join('');
+const st=document.getElementById('smType');if(st&&!st.options.length)st.innerHTML=tys.map(x=>`<option value="${x}">${t('ty_'+x)||x}</option>`).join('');
+}
+function renderBoard(){
+const ft=document.getElementById('fType').value,fn=document.getElementById('fNet').value,fc=document.getElementById('fCost').value;
+const q=document.getElementById('fQ').value.trim().toLowerCase();
+const comm=sGet('dr_comm',[]);
+const all=DROPS.concat(comm.map((c,i)=>({id:'c'+i,n:c.n,ty:c.ty,net:'?',cost:'Free',u:c.u,comm:1,d:{en:c.note||'',tr:c.note||'',ar:c.note||''}})));
+const list=all.filter(r=>(!ft||r.ty===ft)&&(!fn||r.net===fn)&&(!fc||r.cost===fc)&&(!q||(r.n+' '+desc(r)).toLowerCase().includes(q)));
+list.sort((a,b)=>(b.feat||0)-(a.feat||0));
+document.getElementById('board').innerHTML=list.map(r=>`<div class="card${r.feat?' feat':''}"><h3>${esc(r.n)} ${r.feat?`<span class="tag gold">${t('featB')}</span>`:''}${isRef(r)?`<span class="tag grn">${t('refB')}</span>`:''}${r.comm?'<span class="tag">COMMUNITY</span>':''}</h3><div class="meta">${t('ty_'+r.ty)||r.ty} · ${esc(r.net)} · ${t('cost_'+r.cost)||r.cost}</div><p>${esc(desc(r)).slice(0,140)}</p><div class="row"><a href="${refFor(r)}" target="_blank" rel="nofollow sponsored noopener" class="go" style="text-decoration:none;font-size:13px;padding:9px 18px">${t('openB')}</a></div></div>`).join('');
+}
+function submitDrop(){
+const n=document.getElementById('smName').value.trim(),u=document.getElementById('smUrl').value.trim();
+if(n.length<2||!/^https:\/\//i.test(u)){toast(t('smNeed'));return;}
+const c=sGet('dr_comm',[]);c.unshift({n,u,ty:document.getElementById('smType').value,note:document.getElementById('smNote').value.trim(),time:new Date().toLocaleString()});
+sSet('dr_comm',c.slice(0,100));renderBoard();renderComm();toast(t('smOk'));
+document.getElementById('smName').value='';document.getElementById('smUrl').value='';document.getElementById('smNote').value='';
+}
+function renderComm(){const c=sGet('dr_comm',[]);document.getElementById('smList').innerHTML=c.length?`<h2 style="margin-top:14px;font-size:15px">${t('smListT')}</h2>`+c.slice(0,20).map(x=>`<div class="note"><b>${esc(x.n)}</b> — <a target="_blank" rel="noopener" style="color:var(--blu)" href="${esc(x.u)}">${esc(x.u).slice(0,60)}</a><br><small>${esc(x.note||'')}</small></div>`).join(''):'';}
+function fmtN(n){if(n>=1e9)return (n/1e9).toFixed(2)+'B';if(n>=1e6)return (n/1e6).toFixed(2)+'M';if(n>=1e3)return (n/1e3).toFixed(1)+'K';return String(Math.round(n));}
+async function loadMarkets(silent){
+try{
+const r=await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=1&sparkline=false&price_change_percentage=24h');
+if(!r.ok)throw 0;const j=await r.json();
+document.getElementById('mkBody').innerHTML=j.map((c,i)=>{const ch=c.price_change_percentage_24h||0;
+return `<tr><td>${i+1}</td><td><b>${esc(c.symbol||'').toUpperCase()}</b> <small style="color:var(--mut)">${esc(c.name||'')}</small></td><td>$${Number(c.current_price||0).toLocaleString('en-US')}</td><td class="${ch>=0?'up':'dn'}" dir="ltr">${ch>=0?'+':''}${ch.toFixed(2)}%</td><td>$${fmtN(c.market_cap||0)}</td></tr>`;}).join('');
+const tr=await fetch('https://api.coingecko.com/api/v3/search/trending');const tj=await tr.json();
+document.getElementById('trendRow').innerHTML=(tj.coins||[]).slice(0,7).map(x=>`<span class="tag">🔥 ${esc((x.item||{}).name||'?')} (${esc((x.item||{}).symbol||'?')})</span>`).join('');
+document.getElementById('mSync').textContent='✓ '+t('synced')+' '+new Date().toLocaleTimeString();
+}catch(e){if(!silent)toast(t('nodata'));}
+}
+function renderDonate(){
+const P=CONFIG.pay;
+document.getElementById('btcA').textContent=P.btc;
+document.getElementById('usdtA').textContent=P.usdt;
+document.getElementById('donQR').src='https://api.qrserver.com/v1/create-qr-code/?size=120x120&data='+encodeURIComponent('bitcoin:'+P.btc);
+}
+function loadAds(){const A=CONFIG.ads,el=document.getElementById('adFoot');if(!el)return;
+if(A.coinzillaSrc){el.innerHTML='';const s=document.createElement('script');s.async=true;s.src=A.coinzillaSrc;s.dataset.zone=A.coinzillaZone||'';el.appendChild(s);}
+else if(A.cointrafficSrc){el.innerHTML='';const s=document.createElement('script');s.async=true;s.src=A.cointrafficSrc;el.appendChild(s);}
+else if(A.client){el.innerHTML='<ins class="adsbygoogle" style="display:block" data-ad-client="'+A.client+'" data-ad-slot="'+(A.slot||'')+'" data-ad-format="auto"></ins>';
+if(!document.querySelector('script[src*="adsbygoogle"]')){const s=document.createElement('script');s.async=true;s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client='+A.client;s.crossOrigin='anonymous';document.head.appendChild(s);}try{(window.adsbygoogle=window.adsbygoogle||[]).push({});}catch(e){}}
+}
+setLang('en');loadAds();renderDonate();renderComm();loadMarkets();setInterval(()=>loadMarkets(true),300000);
+</script>
+</body>
+</html>
